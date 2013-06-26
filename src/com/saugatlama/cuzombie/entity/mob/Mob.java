@@ -6,7 +6,7 @@ import com.saugatlama.cuzombie.graphics.Sprite;
 public class Mob extends Entity{
 	
 	protected Sprite sprite;
-	protected int dir = 0; 	//direction
+	protected int dir = -1; 	//direction
 							//0 = north, 1 = east, 2 = south, 3 = west
 	protected boolean moving = false;
 	

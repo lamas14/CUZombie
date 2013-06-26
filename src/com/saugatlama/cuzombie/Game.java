@@ -15,7 +15,7 @@ import com.saugatlama.cuzombie.entity.mob.Player;
 import com.saugatlama.cuzombie.graphics.Screen;
 import com.saugatlama.cuzombie.input.Keyboard;
 import com.saugatlama.cuzombie.level.Level;
-import com.saugatlama.cuzombie.level.RandomLevel;
+import com.saugatlama.cuzombie.level.SpawnLevel;
 
 public class Game extends Canvas implements Runnable{
 	private static final long serialVersionUID = 1L;
@@ -45,7 +45,7 @@ public class Game extends Canvas implements Runnable{
 		frame = new JFrame();
 		screen = new Screen(width, height);
 		key = new Keyboard();
-		level = new RandomLevel(64,64);
+		level = new SpawnLevel("/textures/level.png");
 		player = new Player(key);
 		
 		addKeyListener(key);
@@ -110,7 +110,11 @@ public class Game extends Canvas implements Runnable{
 		}
 		
 		screen.clear();
-		level.render(player.x, player.y, screen);
+		
+		int xScroll = player.x - screen.width /2;
+		int yScroll = player.y - screen.height /2;
+		level.render(xScroll, yScroll, screen);
+		player.render(screen);
 		
 		for(int i=0; i<pixels.length; i++){
 			pixels[i] = screen.pixels[i];
