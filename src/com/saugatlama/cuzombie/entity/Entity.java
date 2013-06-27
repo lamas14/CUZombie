@@ -19,11 +19,14 @@ public abstract class Entity {
 	}
 	
 	public void remove(){
-		//remove from level
 		removed = true;
 	}
 	
 	public boolean isRemoved(){
 		return removed;
+	}
+	
+	public void init(Level level){
+		this.level = level;
 	}
 }

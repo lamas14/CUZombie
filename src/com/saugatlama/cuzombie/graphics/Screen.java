@@ -2,6 +2,7 @@ package com.saugatlama.cuzombie.graphics;
 
 import java.util.Random;
 
+import com.saugatlama.cuzombie.entity.projectile.Projectile;
 import com.saugatlama.cuzombie.level.tile.Tile;
 
 public class Screen {
@@ -48,6 +49,21 @@ public class Screen {
 		}
 	}
 	
+	public void renderProjectile(int xp, int yp, Projectile p){
+		xp -= xOffset;
+		yp -= yOffset;
+		for(int y = 0; y < p.getSpriteSize(); y++){
+			int ya = y + yp;
+			for(int x = 0; x< p.getSpriteSize(); x++){
+				int xa = x + xp;
+				if(xa < -p.getSpriteSize() || xa >=width || ya < 0 || ya >= height) break;
+				if(xa < 0) xa=0;
+				int col = p.getSprite().pixels[x+y*p.getSpriteSize()];
+				if(col!=0xffff00ff)	pixels[xa + ya * width] = col;
+			}
+		}
+	}	
+	
 	public void RenderPlayer(int xp, int yp, Sprite sprite, int flip){
 		xp -= xOffset;
 		yp -= yOffset;
@@ -62,7 +78,7 @@ public class Screen {
 				if(xa < -32 || xa >=width || ya < 0 || ya >= height) break;
 				if(xa < 0) xa=0;
 				int col = sprite.pixels[xs+ys*32];
-				if(col!=0xFFFFFFFF) pixels[xa + ya * width] = col;
+				if(col!=0xFFFF00FF) pixels[xa + ya * width] = col;
 			}
 		}
 	}

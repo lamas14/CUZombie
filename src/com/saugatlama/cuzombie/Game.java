@@ -14,14 +14,15 @@ import javax.swing.JFrame;
 import com.saugatlama.cuzombie.entity.mob.Player;
 import com.saugatlama.cuzombie.graphics.Screen;
 import com.saugatlama.cuzombie.input.Keyboard;
+import com.saugatlama.cuzombie.input.Mouse;
 import com.saugatlama.cuzombie.level.Level;
-import com.saugatlama.cuzombie.level.SpawnLevel;
+import com.saugatlama.cuzombie.level.TileCoordinate;
 
 public class Game extends Canvas implements Runnable{
 	private static final long serialVersionUID = 1L;
 	
-	public static int width = 300;
-	public static int height = width/16 * 9;
+	private static int width = 300;
+	private static int height = width/16 * 9;
 	public static int scale= 3;
 	public static String title = "CU Zombie";
 
@@ -45,10 +46,15 @@ public class Game extends Canvas implements Runnable{
 		frame = new JFrame();
 		screen = new Screen(width, height);
 		key = new Keyboard();
-		level = new SpawnLevel("/textures/level.png");
-		player = new Player(key);
-		
+		level = Level.spawn;
+		TileCoordinate playerSpawn = new TileCoordinate(21,6);
+		player = new Player(playerSpawn.x(), playerSpawn.y(),key);
+		player.init(level);
 		addKeyListener(key);
+		
+		Mouse mouse = new Mouse();
+		addMouseListener(mouse);
+		addMouseMotionListener(mouse);
 	}
 	
 	public synchronized void start(){
@@ -67,6 +73,8 @@ public class Game extends Canvas implements Runnable{
 	}
 	
 	public void run(){
+
+		requestFocus();
 		long lastTime = System.nanoTime();
 		long timer = System.currentTimeMillis();
 		final double ns = 1000000000.0 / 60.0;
@@ -74,7 +82,6 @@ public class Game extends Canvas implements Runnable{
 		int frames = 0;
 		int updates = 0;
 		
-		requestFocus();
 		while(running){
 			long now = System.nanoTime();
 			delta += (now-lastTime)/ns;
@@ -100,6 +107,7 @@ public class Game extends Canvas implements Runnable{
 	public void update(){
 		key.update();
 		player.update();
+		level.update();
 	}
 	
 	public void render(){
@@ -124,8 +132,19 @@ public class Game extends Canvas implements Runnable{
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Verdana", 0, 50));
+		
+		//g.fillRect(Mouse.getX()-32, Mouse.getY()-32, 64, 64);
+		//g.drawString("Button: " + Mouse.getButton(), 80, 80);
 		g.dispose();
 		bs.show();
+	}
+	
+	public static int getWindowWidth(){
+		return width*scale;
+	}
+	
+	public static int getWindowHeight(){
+		return height*scale;
 	}
 	
 	public static void main(String[] args){
