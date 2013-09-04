@@ -1,5 +1,6 @@
 package com.saugatlama.cuzombie.entity.projectile;
 
+import com.saugatlama.cuzombie.entity.spawner.ParticleSpawner;
 import com.saugatlama.cuzombie.graphics.Screen;
 import com.saugatlama.cuzombie.graphics.Sprite;
 
@@ -18,15 +19,19 @@ public class TrainerProjectile extends Projectile {
 	}
 
 	public void update() {
-		if ((level.tileCollision(x, y, nx, ny, 9))) remove();
+		if ((level.tileCollision(x, y, nx, ny, 9))) {
+			level.add(new ParticleSpawner((int) x, (int) y, 44, 50,
+					level));
+			remove();
+		}
 		move();
 	}
 
 	protected void move() {
-			x += nx;
-			y += ny;
-			if (distance() > range)
-				remove();
+		x += nx;
+		y += ny;
+		if (distance() > range)
+			remove();
 	}
 
 	private double distance() {
