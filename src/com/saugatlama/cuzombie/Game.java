@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import com.saugatlama.cuzombie.entity.mob.Player;
 import com.saugatlama.cuzombie.graphics.Screen;
 import com.saugatlama.cuzombie.graphics.Sprite;
+import com.saugatlama.cuzombie.graphics.SpriteSheet;
 import com.saugatlama.cuzombie.input.Keyboard;
 import com.saugatlama.cuzombie.input.Mouse;
 import com.saugatlama.cuzombie.level.Level;
@@ -127,7 +128,7 @@ public class Game extends Canvas implements Runnable {
 		int yScroll = player.y - screen.height / 2;
 		level.render(xScroll, yScroll, screen);
 		player.render(screen);
-
+		//screen.renderSheet(40, 40, SpriteSheet.player_down, false);
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = screen.pixels[i];
 		}

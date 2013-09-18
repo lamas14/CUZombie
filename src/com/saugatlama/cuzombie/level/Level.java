@@ -65,13 +65,12 @@ public class Level {
 	private void time() {
 	}
 
-	public boolean tileCollision(double x, double y, double xa, double ya,
-			int size) {
+	public boolean tileCollision(int x, int y, int size, int xOffset, int yOffset) {
 		boolean solid = false;
 		for (int c = 0; c < 4; c++) {
-			int xt = (((int) x + (int) xa) + c % 2 * size - 2) / 16;
-			int yt = (((int) y + (int) ya) + c / 2 * size + 1) / 16;
-			if (getTile((int) xt, (int) yt).solid())
+			int xt = (x - c % 2 * size + xOffset) >> 4;    // >> 4 is same as / 16
+			int yt = (y - c / 2 * size + yOffset) >> 4;
+			if (getTile(xt, yt).solid())
 				solid = true;
 		}
 		return solid;

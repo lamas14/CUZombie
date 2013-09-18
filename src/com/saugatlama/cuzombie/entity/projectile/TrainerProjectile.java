@@ -19,9 +19,8 @@ public class TrainerProjectile extends Projectile {
 	}
 
 	public void update() {
-		if ((level.tileCollision(x, y, nx, ny, 9))) {
-			level.add(new ParticleSpawner((int) x, (int) y, 44, 50,
-					level));
+		if ((level.tileCollision((int)(x + nx), (int)(y + ny), 8, 8, 4))) {
+			level.add(new ParticleSpawner((int) x, (int) y, 44, 50, level));
 			remove();
 		}
 		move();
