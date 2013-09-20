@@ -8,28 +8,31 @@ import javax.imageio.ImageIO;
 import com.saugatlama.cuzombie.entity.mob.Dummy;
 import com.saugatlama.cuzombie.level.tile.Tile;
 
-public class SpawnLevel extends Level{
-	
+public class SpawnLevel extends Level {
+
 	public SpawnLevel(String path) {
 		super(path);
 	}
-	
-	protected void loadLevel(String path){
-		try{
-			BufferedImage image = ImageIO.read(SpawnLevel.class.getResource(path));
+
+	protected void loadLevel(String path) {
+		try {
+			BufferedImage image = ImageIO.read(SpawnLevel.class
+					.getResource(path));
 			width = image.getWidth();
 			height = image.getHeight();
-			tiles = new int[width*height];
+			tiles = new int[width * height];
 			image.getRGB(0, 0, width, height, tiles, 0, width);
-		}catch(IOException e){
+		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("Exception! Could not load level file.");
 		}
-		add(new Dummy(16, 6));
+		for (int i = 0; i < 10; i++) {
+			add(new Dummy(19, 26));
+		}
 	}
 
-	protected void generateLevel(){
+	protected void generateLevel() {
 		System.out.println("Tiles[0] " + tiles[0]);
-		
+
 	}
 }
