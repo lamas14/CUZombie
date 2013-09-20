@@ -3,30 +3,40 @@ package com.saugatlama.cuzombie.entity;
 import java.util.Random;
 
 import com.saugatlama.cuzombie.graphics.Screen;
+import com.saugatlama.cuzombie.graphics.Sprite;
 import com.saugatlama.cuzombie.level.Level;
 
-public abstract class Entity {
-	
-	public int x,y;
+public class Entity {
+
+	public int x, y;
+	private Sprite sprite;
 	private boolean removed = false;
 	protected Level level;
 	protected final Random random = new Random();
-	
-	public void update(){
+
+	public Entity() {
+		this.x = x;
+		this.y = y;
+		this.sprite = sprite;
 	}
-	
-	public void render(Screen screen){
+
+	public void update() {
 	}
-	
-	public void remove(){
+
+	public void render(Screen screen) {
+		if (sprite != null)
+			screen.renderSprite(x, y, sprite, true);
+	}
+
+	public void remove() {
 		removed = true;
 	}
-	
-	public boolean isRemoved(){
+
+	public boolean isRemoved() {
 		return removed;
 	}
-	
-	public void init(Level level){
+
+	public void init(Level level) {
 		this.level = level;
 	}
 }

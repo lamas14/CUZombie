@@ -1,18 +1,23 @@
 package com.saugatlama.cuzombie.entity.mob;
 
 import com.saugatlama.cuzombie.entity.Entity;
-import com.saugatlama.cuzombie.entity.particle.Particle;
 import com.saugatlama.cuzombie.entity.projectile.Projectile;
 import com.saugatlama.cuzombie.entity.projectile.TrainerProjectile;
+import com.saugatlama.cuzombie.graphics.Screen;
 import com.saugatlama.cuzombie.graphics.Sprite;
 
-public class Mob extends Entity {
+public abstract class Mob extends Entity {
 
 	protected Sprite sprite;
-	protected int dir = -1; // direction
-	// 0 = north, 1 = east, 2 = south, 3 = west
 	protected boolean walking = false;
 	protected boolean moving = false;
+	
+	protected enum Direction {
+		UP, DOWN, LEFT, RIGHT;
+	}
+	
+	protected Direction dir;
+	
 
 	public void move(int xa, int ya) {
 		if (xa != 0 && ya != 0) {
@@ -21,13 +26,13 @@ public class Mob extends Entity {
 			return;
 		}
 		if (xa > 0)
-			dir = 1;
+			dir = Direction.RIGHT;
 		if (xa < 0)
-			dir = 3;
+			dir = Direction.LEFT;
 		if (ya > 0)
-			dir = 2;
+			dir = Direction.DOWN;
 		if (ya < 0)
-			dir = 0;
+			dir = Direction.UP;
 
 		if (!collision(xa, ya)) {
 			x += xa;
@@ -35,9 +40,9 @@ public class Mob extends Entity {
 		} 
 	}
 
-	public void update() {
+	public abstract void update();
 
-	}
+	public abstract void render(Screen screen);
 
 	protected void shoot(int x, int y, double dir) {
 		// dir = dir * (180/Math.PI);
@@ -55,10 +60,6 @@ public class Mob extends Entity {
 				solid = true;
 		}
 		return solid;
-	}
-
-	public void render() {
-
 	}
 
 }

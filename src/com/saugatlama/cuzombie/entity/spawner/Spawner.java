@@ -4,7 +4,7 @@ import com.saugatlama.cuzombie.entity.Entity;
 import com.saugatlama.cuzombie.entity.particle.Particle;
 import com.saugatlama.cuzombie.level.Level;
 
-public class Spawner extends Entity {
+public abstract class Spawner extends Entity {
 
 	
 	public enum Type {

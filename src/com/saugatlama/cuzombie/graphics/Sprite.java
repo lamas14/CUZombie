@@ -47,12 +47,15 @@ public class Sprite {
 	public static Sprite player_side_1 = new Sprite(32, 1, 6, SpriteSheet.tiles);
 	public static Sprite player_side_2 = new Sprite(32, 1, 7, SpriteSheet.tiles);
 
+	public static Sprite dummy = new Sprite(32, 0, 0, SpriteSheet.dummy_down);
+
 	// projectile Sprites here
 	public static Sprite projectile_trainer = new Sprite(16, 0, 0,
 			SpriteSheet.projectile_Trainer);
 	
 	// Particles 
 	public static Sprite particle_normal = new Sprite(3, 0xAAAAAA);
+	public static Sprite square = new Sprite(2, 0xFF0000);
 
 	protected Sprite(SpriteSheet sheet, int width, int height) {
 		SIZE = (width == height) ? width : -1;
@@ -110,10 +113,10 @@ public class Sprite {
 	}
 
 	private void load() {
-		for (int y = 0; y < SIZE; y++) {
-			for (int x = 0; x < SIZE; x++) {
-				pixels[x + y * SIZE] = sheet.pixels[(x + this.x) + (y + this.y)
-						* sheet.SIZE];
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				pixels[x + y * width] = sheet.pixels[(x + this.x) + (y + this.y)
+						* sheet.WIDTH];
 			}
 		}
 	}
