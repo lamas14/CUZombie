@@ -2,6 +2,8 @@ package com.saugatlama.cuzombie.graphics;
 
 import java.util.Random;
 
+import com.saugatlama.cuzombie.entity.mob.Creeper;
+import com.saugatlama.cuzombie.entity.mob.Mob;
 import com.saugatlama.cuzombie.entity.projectile.Projectile;
 import com.saugatlama.cuzombie.level.tile.Tile;
 
@@ -125,6 +127,27 @@ public class Screen {
 		}
 	}
 
+	public void renderMob(int xp, int yp, Mob mob) {
+		xp -= xOffset;
+		yp -= yOffset;
+		for (int y = 0; y < 32; y++) {
+			int ya = y + yp;
+			int ys = y;
+			for (int x = 0; x < 32; x++) {
+				int xa = x + xp;
+				int xs = x;
+				if (xa < -32 || xa >= width || ya < 0 || ya >= height)
+					break;
+				if (xa < 0)
+					xa = 0;
+				int col = mob.getSprite().pixels[xs + ys * 32];
+				if((mob instanceof Creeper) && col == 0xff7F6A00) col = 0Xff294F68;
+				if (col != 0xFFFF00FF)
+					pixels[xa + ya * width] = col;
+			}
+		}
+	}
+	
 	public void setOffset(int xOffset, int yOffset) {
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;

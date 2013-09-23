@@ -9,7 +9,7 @@ import com.saugatlama.cuzombie.level.Level;
 public class Entity {
 
 	public int x, y;
-	private Sprite sprite;
+	protected Sprite sprite;
 	private boolean removed = false;
 	protected Level level;
 	protected final Random random = new Random();
@@ -32,6 +32,10 @@ public class Entity {
 		removed = true;
 	}
 
+	public Sprite getSprite(){
+		return sprite;
+	}
+	
 	public boolean isRemoved() {
 		return removed;
 	}

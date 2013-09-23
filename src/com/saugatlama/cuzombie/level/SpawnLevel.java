@@ -5,8 +5,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.saugatlama.cuzombie.entity.mob.Creeper;
 import com.saugatlama.cuzombie.entity.mob.Dummy;
-import com.saugatlama.cuzombie.level.tile.Tile;
 
 public class SpawnLevel extends Level {
 
@@ -26,8 +26,9 @@ public class SpawnLevel extends Level {
 			e.printStackTrace();
 			System.out.println("Exception! Could not load level file.");
 		}
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 5; i++) {
 			add(new Dummy(19, 26));
+			add(new Creeper(19, 26));
 		}
 	}
 

@@ -7,8 +7,7 @@ import com.saugatlama.cuzombie.graphics.Screen;
 import com.saugatlama.cuzombie.graphics.Sprite;
 
 public abstract class Mob extends Entity {
-
-	protected Sprite sprite;
+	
 	protected boolean walking = false;
 	protected boolean moving = false;
 	
