@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.saugatlama.cuzombie.entity.Entity;
+import com.saugatlama.cuzombie.entity.mob.Player;
 import com.saugatlama.cuzombie.entity.particle.Particle;
 import com.saugatlama.cuzombie.entity.projectile.Projectile;
 import com.saugatlama.cuzombie.graphics.Screen;
@@ -18,6 +19,8 @@ public class Level {
 	private List<Projectile> projectiles = new ArrayList<Projectile>();
 	private List<Particle> particles = new ArrayList<Particle>();
 
+	private List<Player> players = new ArrayList<Player>();
+	
 	public static Level spawn = new SpawnLevel("/Levels/spawn.png");
 
 	public Level(int width, int height) {
@@ -48,6 +51,9 @@ public class Level {
 		for (int i = 0; i < particles.size(); i++) {
 			particles.get(i).update();
 		}
+		for (int i = 0; i < players.size(); i++) {
+			players.get(i).update();
+		}
 		remove();
 	}
 
@@ -60,6 +66,9 @@ public class Level {
 		}
 		for (int i = 0; i < particles.size(); i++) {
 			if(particles.get(i).isRemoved()) particles.remove(i);
+		}
+		for (int i = 0; i < players.size(); i++) {
+			if(players.get(i).isRemoved()) players.remove(i);
 		}
 	}
 	private void time() {
@@ -97,6 +106,9 @@ public class Level {
 		for (int i = 0; i < particles.size(); i++) {
 			particles.get(i).render(screen);
 		}
+		for (int i = 0; i < players.size(); i++) {
+			players.get(i).render(screen);
+		}
 	}
 
 	public void add(Entity e) {
@@ -105,11 +117,25 @@ public class Level {
 			particles.add((Particle) e);
 		} else if (e instanceof Projectile) {
 			projectiles.add((Projectile) e);
+		} else if (e instanceof Player) {
+			players.add((Player)e);
 		} else {
 			entities.add(e);
 		}
 	}
 
+	public List<Player> getPlayers() {
+		return players;
+	}
+	
+	public Player getPlayerAt(int index) {
+		return players.get(index);
+	}
+	
+	public Player getClientPlayer(){
+		return players.get(0);
+	}
+	
 	// Grass = green(0xFF00FF00)
 	// Flower = yellow(0xFFFFFF00)
 	// Rock = dark yellow(0xFF7F7F00)

@@ -8,7 +8,7 @@ import com.saugatlama.cuzombie.level.Level;
 
 public class Entity {
 
-	public int x, y;
+	protected int x, y;
 	protected Sprite sprite;
 	private boolean removed = false;
 	protected Level level;
@@ -38,6 +38,13 @@ public class Entity {
 	
 	public boolean isRemoved() {
 		return removed;
+	}
+	
+	public int getX() {
+		return x;
+	}
+	public int getY() {
+		return y;
 	}
 
 	public void init(Level level) {
