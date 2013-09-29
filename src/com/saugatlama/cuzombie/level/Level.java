@@ -20,7 +20,7 @@ public class Level {
 	private List<Particle> particles = new ArrayList<Particle>();
 
 	private List<Player> players = new ArrayList<Player>();
-	
+
 	public static Level spawn = new SpawnLevel("/Levels/spawn.png");
 
 	public Level(int width, int height) {
@@ -59,25 +59,31 @@ public class Level {
 
 	private void remove() {
 		for (int i = 0; i < entities.size(); i++) {
-			if(entities.get(i).isRemoved()) entities.remove(i);
+			if (entities.get(i).isRemoved())
+				entities.remove(i);
 		}
 		for (int i = 0; i < projectiles.size(); i++) {
-			if(projectiles.get(i).isRemoved()) projectiles.remove(i);
+			if (projectiles.get(i).isRemoved())
+				projectiles.remove(i);
 		}
 		for (int i = 0; i < particles.size(); i++) {
-			if(particles.get(i).isRemoved()) particles.remove(i);
+			if (particles.get(i).isRemoved())
+				particles.remove(i);
 		}
 		for (int i = 0; i < players.size(); i++) {
-			if(players.get(i).isRemoved()) players.remove(i);
+			if (players.get(i).isRemoved())
+				players.remove(i);
 		}
 	}
+
 	private void time() {
 	}
 
-	public boolean tileCollision(int x, int y, int size, int xOffset, int yOffset) {
+	public boolean tileCollision(int x, int y, int size, int xOffset,
+			int yOffset) {
 		boolean solid = false;
 		for (int c = 0; c < 4; c++) {
-			int xt = (x - c % 2 * size + xOffset) >> 4;    // >> 4 is same as / 16
+			int xt = (x - c % 2 * size + xOffset) >> 4; // >> 4 is same as / 16
 			int yt = (y - c / 2 * size + yOffset) >> 4;
 			if (getTile(xt, yt).solid())
 				solid = true;
@@ -118,7 +124,7 @@ public class Level {
 		} else if (e instanceof Projectile) {
 			projectiles.add((Projectile) e);
 		} else if (e instanceof Player) {
-			players.add((Player)e);
+			players.add((Player) e);
 		} else {
 			entities.add(e);
 		}
@@ -127,15 +133,52 @@ public class Level {
 	public List<Player> getPlayers() {
 		return players;
 	}
-	
+
 	public Player getPlayerAt(int index) {
 		return players.get(index);
 	}
-	
-	public Player getClientPlayer(){
+
+	public Player getClientPlayer() {
 		return players.get(0);
 	}
-	
+
+	public List<Entity> getEntities(Entity e, int radius) {
+		List<Entity> result = new ArrayList<Entity>();
+		int ex = e.getX();
+		int ey = e.getY();
+		for (int i = 0; i < entities.size(); i++) {
+			Entity entity = entities.get(i);
+			int x = entity.getX();
+			int y = entity.getY();
+
+			int dx = Math.abs(x - ex);
+			int dy = Math.abs(y - ey);
+			double distance = Math.sqrt((dx * dx) + (dy * dy));
+			if (distance <= radius) {
+				result.add(e);
+			}
+		}
+		return result;
+	}
+
+	public List<Player> getPlayers(Entity e, int radius) {
+		List<Player> result = new ArrayList<Player>();
+		int ex = e.getX();
+		int ey = e.getY();
+		for (int i = 0; i < players.size(); i++) {
+			Player player = players.get(i);
+			int x = player.getX();
+			int y = player.getY();
+
+			int dx = Math.abs(x - ex);
+			int dy = Math.abs(y - ey);
+			double distance = Math.sqrt((dx * dx) + (dy * dy));
+			if (distance <= radius)
+				result.add(player);
+		}
+		return result;
+	}
+
 	// Grass = green(0xFF00FF00)
 	// Flower = yellow(0xFFFFFF00)
 	// Rock = dark yellow(0xFF7F7F00)

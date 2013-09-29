@@ -25,7 +25,6 @@ public class AnimatedSprite extends Sprite {
 				frame++;
 			sprite = sheet.getSprites()[frame];
 		}
-		System.out.println(sprite + ", Frame: " + frame);
 	}
 
 	public Sprite getSprite() {

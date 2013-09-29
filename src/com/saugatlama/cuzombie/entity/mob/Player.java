@@ -1,6 +1,9 @@
 package com.saugatlama.cuzombie.entity.mob;
 
+import java.util.List;
+
 import com.saugatlama.cuzombie.Game;
+import com.saugatlama.cuzombie.entity.Entity;
 import com.saugatlama.cuzombie.entity.projectile.Projectile;
 import com.saugatlama.cuzombie.entity.projectile.TrainerProjectile;
 import com.saugatlama.cuzombie.graphics.AnimatedSprite;
@@ -43,27 +46,34 @@ public class Player extends Mob {
 	}
 
 	public void update() {
-		if(walking) animSprite.update();
-		else animSprite.setFrame(0);
+		List<Entity> es = level.getEntities(this, 20);
+		System.out.println(es.size());
+		for (Entity e : es) {
+			System.out.println(e);
+		}
+		if (walking)
+			animSprite.update();
+		else
+			animSprite.setFrame(0);
 		if (fireRate > 0)
 			fireRate--;
 		int xa = 0, ya = 0;
-		
+
 		if (input.up) {
 			animSprite = up;
-			ya--;
+			ya -= 2;
 		}
 		if (input.down) {
 			animSprite = down;
-			ya++;
+			ya += 2;
 		}
 		if (input.left) {
 			animSprite = left;
-			xa--;
+			xa -= 2;
 		}
 		if (input.right) {
 			animSprite = right;
-			xa++;
+			xa += 2;
 		}
 		if (xa != 0 || ya != 0) {
 			move(xa, ya);

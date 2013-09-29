@@ -1,5 +1,7 @@
 package com.saugatlama.cuzombie.entity.mob;
 
+import java.util.List;
+
 import com.saugatlama.cuzombie.entity.mob.Mob.Direction;
 import com.saugatlama.cuzombie.graphics.AnimatedSprite;
 import com.saugatlama.cuzombie.graphics.Screen;
@@ -16,12 +18,12 @@ public class Creeper extends Mob {
 			32, 32, 3);
 	private AnimatedSprite right = new AnimatedSprite(SpriteSheet.dummy_right,
 			32, 32, 3);
-	
+
 	private AnimatedSprite animSprite = down;
 
 	private int xa = 0;
 	private int ya = 0;
-	
+
 	public Creeper(int x, int y) {
 		this.x = x << 4;
 		this.y = y << 4;
@@ -31,13 +33,19 @@ public class Creeper extends Mob {
 	private void move() {
 		xa = 0;
 		ya = 0;
-		
-		Player player = level.getClientPlayer();
-		if(x < player.getX()) xa++;
-		if(x > player.getX()) xa--;
-		if(y < player.getY()) ya++;
-		if(y > player.getY()) ya--;
-		
+		List<Player> players = level.getPlayers(this, 50);
+		if (players.size() > 0) {
+			Player player = players.get(0);
+			if (x < player.getX())
+				xa++;
+			if (x > player.getX())
+				xa--;
+			if (y < player.getY())
+				ya++;
+			if (y > player.getY())
+				ya--;
+		}
+
 		if (xa != 0 || ya != 0) {
 			move(xa, ya);
 			walking = true;
@@ -48,8 +56,10 @@ public class Creeper extends Mob {
 
 	public void update() {
 		move();
-		if(walking) animSprite.update();
-		else animSprite.setFrame(0);
+		if (walking)
+			animSprite.update();
+		else
+			animSprite.setFrame(0);
 		if (ya < 0) {
 			animSprite = up;
 			dir = Direction.UP;
